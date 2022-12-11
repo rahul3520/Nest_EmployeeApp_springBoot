@@ -50,4 +50,25 @@ public class TaskController {
     {
         return (List<Map<String, String>>) tdao.ViewTasksAllocated();
     }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/modifyTaskStatus",produces = "application/json",consumes = "application/json")
+    public HashMap<String, String> SearchTask(@RequestBody Tasks t)
+    {
+        String eid=String.valueOf(t.getEmpId());
+        String tName=String.valueOf(t.getTaskName().toString());
+        String newStatus=String.valueOf(t.getTaskStatus().toString());
+
+        System.out.println(eid);
+        System.out.println(tName);
+        System.out.println(newStatus);
+
+        tdao.ChangeTaskStatus(t.getEmpId(),t.getTaskName(),t.getTaskStatus());
+
+        HashMap<String,String> map=new HashMap<>();
+
+        map.put("status","success");
+
+        return map;
+    }
 }
